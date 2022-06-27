@@ -27,7 +27,7 @@ fi
 if [[ $HAS_SOURCE_DIR == true ]]; then
   echo "Checking out the gh-pages branch on $INPUT_SOURCE_DIR (without keeping its history) from commit $GITHUB_SHA"
   git branch -D gh-pages 1>/dev/null 2>/dev/null || true
-  git checkout -q --orphan gh-pages "$GITHUB_SHA" 1>/dev/null
+  git checkout -q --orphan main-pdf "$GITHUB_SHA" 1>/dev/null
   mv "$INPUT_SOURCE_DIR" /tmp/source
   #Ignores directories . and .git
   find . -not -path './.git*' -not -name '.' -exec rm -rf {} \; || true
@@ -35,7 +35,7 @@ if [[ $HAS_SOURCE_DIR == true ]]; then
   git add .
 else
   echo "Checking out the gh-pages branch (keeping its history) from commit $GITHUB_SHA"
-  git checkout "$GITHUB_SHA" -B gh-pages
+  git checkout "$GITHUB_SHA" -B main-pdf
 fi
 
 # Executes any arbitrary shell command (such as packages installation and environment setup)
@@ -109,4 +109,4 @@ if ! ssh -T git@github.com > /dev/null 2>/dev/null; then
 fi
 
 echo "Pushing changes back to the remote repository"
-git push -f --set-upstream origin gh-pages
+git push -f --set-upstream origin main-pdf
