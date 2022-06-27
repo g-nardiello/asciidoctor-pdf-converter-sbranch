@@ -89,7 +89,6 @@ git config --global user.email "action@github.com"
 git config --global user.name "GitHub Action"
 
 MSG="Build $INPUT_ADOC_FILE_EXT Files for GitHub Pages from $GITHUB_SHA"
-git rm -rf .github/ || true
 echo "Committing changes to gh-pages branch"
 git commit -m "$MSG" 1>/dev/null
 
@@ -108,4 +107,4 @@ if ! ssh -T git@github.com > /dev/null 2>/dev/null; then
 fi
 
 echo "Pushing changes back to the remote repository"
-git push -f --set-upstream origin
+git push -f --set-upstream origin main
