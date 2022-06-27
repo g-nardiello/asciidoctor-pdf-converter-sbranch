@@ -35,7 +35,7 @@ if [[ $HAS_SOURCE_DIR == true ]]; then
   git add .
 else
   echo "Checking out the gh-pages branch (keeping its history) from commit $GITHUB_SHA"
-  git checkout "$GITHUB_SHA" -B main-pdf
+  git checkout "$GITHUB_SHA" -B main
 fi
 
 # Executes any arbitrary shell command (such as packages installation and environment setup)
@@ -47,7 +47,6 @@ if [[ $INPUT_SLIDES_SKIP_ASCIIDOCTOR_BUILD == false ]]; then
     echo "Converting AsciiDoc files to HTML"
     find . -maxdepth 5 -name "*$INPUT_ADOC_FILE_EXT" -exec asciidoctor-pdf $INPUT_ASCIIDOCTOR_PARAMS {} \;
     find . -name "README.html" -execdir ln -s "README.html" "index.html" \;
-    find . -name "*$INPUT_ADOC_FILE_EXT" -exec git rm -f --cached {} \;
 fi
 
 PDF_FILE="ebook.pdf"
@@ -109,4 +108,4 @@ if ! ssh -T git@github.com > /dev/null 2>/dev/null; then
 fi
 
 echo "Pushing changes back to the remote repository"
-git push -f --set-upstream origin main-pdf
+git push -f --set-upstream origin
