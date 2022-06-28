@@ -25,7 +25,7 @@ git checkout "$GITHUB_SHA" -B $INPUT_WORKING_BRANCH
 eval "$INPUT_PRE_BUILD"
 
 echo "Converting AsciiDoc files to HTML"
-find . -maxdepth 5 -name "*$INPUT_ADOC_FILE_EXT" -exec asciidoctor-pdf $INPUT_ASCIIDOCTOR_PARAMS {} \;
+find . -maxdepth 5 -name "*$INPUT_ADOC_FILE_EXT" -exec asciidoctor-pdf -b pdf -a icons=font -a icon-set=pf $INPUT_ASCIIDOCTOR_PARAMS {} \;
 find . -name "README.html" -execdir ln -s "README.html" "index.html" \;
 
 if [[ $INPUT_WORKING_BRANCH != ${GITHUB_REF##*/} ]]; then
